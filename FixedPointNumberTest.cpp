@@ -142,14 +142,192 @@ void testMultiplicationOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
-void testIntegerMultiplicationOperator()
+void testNegativeMultiplication()
 {
 	try
 	{
-		FixedPointNumber<8, 8> number("4.0");
-		int integerValue = 3;
-		FixedPointNumber<8, 8> product = number * integerValue;
-		std::cout << "Integer multiplication operator: " << number.toString() << " * " << integerValue << " = " << product.toString() << std::endl;
+		FixedPointNumber<8, 8> number1("-4.0");
+		FixedPointNumber<8, 8> number2("2.5");
+		FixedPointNumber<8, 8> product = number1 * number2;
+		std::cout << "Negative multiplication: " << number1.toString() << " * " << number2.toString() << " = " << product.toString() << std::endl;
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+	}
+}
+void testModuloOperator()
+{
+	try
+	{
+		FixedPointNumber<8, 8> number1("10.5");
+		FixedPointNumber<8, 8> number2("3.0");
+		FixedPointNumber<8, 8> remainder = number1 % number2;
+		std::cout << "Modulo operator: " << number1.toString() << " % " << number2.toString() << " = " << remainder.toString() << std::endl;
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+	}
+}
+void testDivisionOperator()
+{
+	try
+	{
+		FixedPointNumber<8, 8> number1("7.0");
+		FixedPointNumber<8, 8> number2("2.0");
+		FixedPointNumber<8, 8> quotient = number1 / number2;
+		std::cout << "Division operator: " << number1.toString() << " / " << number2.toString() << " = " << quotient.toString() << std::endl;
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+	}
+}
+void testEqualityOperator()
+{
+	try
+	{
+		FixedPointNumber<8, 8> number1("5.0");
+		FixedPointNumber<8, 8> number2("5.0");
+		if (number1 == number2)
+		{
+			std::cout << "Equality operator: " << number1.toString() << " == " << number2.toString() << " is true." << std::endl;
+		}
+		else
+		{
+			std::cout << "Equality operator: " << number1.toString() << " == " << number2.toString() << " is false." << std::endl;
+		}
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+	}
+}
+void testInequalityOperator()
+{
+	try
+	{
+		FixedPointNumber<8, 8> number1("5.0");
+		FixedPointNumber<8, 8> number2("6.0");
+		if (number1 != number2)
+		{
+			std::cout << "Inequality operator: " << number1.toString() << " != " << number2.toString() << " is true." << std::endl;
+		}
+		else
+		{
+			std::cout << "Inequality operator: " << number1.toString() << " != " << number2.toString() << " is false." << std::endl;
+		}
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+	}
+}
+void testLessThanOperator()
+{
+	try
+	{
+		FixedPointNumber<8, 8> number1("5.0");
+		FixedPointNumber<8, 8> number2("6.0");
+		if (number1 < number2)
+		{
+			std::cout << "Less-than operator: " << number1.toString() << " < " << number2.toString() << " is true." << std::endl;
+		}
+		else
+		{
+			std::cout << "Less-than operator: " << number1.toString() << " < " << number2.toString() << " is false." << std::endl;
+		}
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+	}
+}
+void testLessThanOrEqualToOperator()
+{
+	try
+	{
+		FixedPointNumber<8, 8> number1("5.0");
+		FixedPointNumber<8, 8> number2("5.0");
+		if (number1 <= number2)
+		{
+			std::cout << "Less-than-or-equal-to operator: " << number1.toString() << " <= " << number2.toString() << " is true." << std::endl;
+		}
+		else
+		{
+			std::cout << "Less-than-or-equal-to operator: " << number1.toString() << " <= " << number2.toString() << " is false." << std::endl;
+		}
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+	}
+}
+void testGreaterThanOperator()
+{
+	try
+	{
+		FixedPointNumber<8, 8> number1("7.0");
+		FixedPointNumber<8, 8> number2("6.0");
+		if (number1 > number2)
+		{
+			std::cout << "Greater-than operator: " << number1.toString() << " > " << number2.toString() << " is true." << std::endl;
+		}
+		else
+		{
+			std::cout << "Greater-than operator: " << number1.toString() << " > " << number2.toString() << " is false." << std::endl;
+		}
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+	}
+}
+void testGreaterThanOrEqualToOperator()
+{
+	try
+	{
+		FixedPointNumber<8, 8> number1("7.0");
+		FixedPointNumber<8, 8> number2("7.0");
+		if (number1 >= number2)
+		{
+			std::cout << "Greater-than-or-equal-to operator: " << number1.toString() << " >= " << number2.toString() << " is true." << std::endl;
+		}
+		else
+		{
+			std::cout << "Greater-than-or-equal-to operator: " << number1.toString() << " >= " << number2.toString() << " is false." << std::endl;
+		}
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+	}
+}
+void testPlusEqualsOperator()
+{
+	try
+	{
+		FixedPointNumber<8, 8> number1("5.0");
+		FixedPointNumber<8, 8> number2("3.0");
+		std::cout << "Plus-equals operator: Before number1 += number2, number1 = " << number1.toString() << std::endl;
+		number1 += number2;
+		std::cout << "Plus-equals operator: After number1 += number2, number1 = " << number1.toString() << std::endl;
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+	}
+}
+void testMinusEqualsOperator()
+{
+	try
+	{
+		FixedPointNumber<8, 8> number1("5.0");
+		FixedPointNumber<8, 8> number2("3.0");
+		std::cout << "Minus-equals operator: Before number1 -= number2, number1 = " << number1.toString() << std::endl;
+		number1 -= number2;
+		std::cout << "Minus-equals operator: After number1 -= number2, number1 = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -169,6 +347,16 @@ int main()
 	testAdditionWithNegative();
 	testFractionalRounding();
 	testMultiplicationOperator();
-	testIntegerMultiplicationOperator();
+	testNegativeMultiplication();
+	testDivisionOperator();
+	testModuloOperator();
+	testEqualityOperator();
+	testInequalityOperator();
+	testLessThanOperator();
+	testLessThanOrEqualToOperator();
+	testGreaterThanOperator();
+	testGreaterThanOrEqualToOperator();
+	testPlusEqualsOperator();
+	testMinusEqualsOperator();
 	return 0;
 }

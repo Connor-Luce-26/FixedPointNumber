@@ -2,11 +2,12 @@
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::twosComplement(std::bitset<numberOfIntegerBits + numberOfFractionalBits> bits)
 {
-	bits.flip();
-	return addBitsets(bits, std::bitset<numberOfIntegerBits + numberOfFractionalBits>(), true);
+	std::bitset<numberOfIntegerBits + numberOfFractionalBits> copyBits = bits;
+	copyBits.flip();
+	return addBitsets(copyBits, std::bitset<numberOfIntegerBits + numberOfFractionalBits>(), true);
 }
 template <int numberOfIntegerBits, int numberOfFractionalBits>
-std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::addBitsets(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet1, const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet2, const bool carryIn)
+std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::addBitsets(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet1, const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet2, bool carryIn)
 {
 	std::bitset<numberOfIntegerBits + numberOfFractionalBits> sumBits;
 	bool carry = carryIn;
@@ -18,6 +19,21 @@ std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numbe
 		sumBits[bitNumber] = sum;
 	}
 	return sumBits;
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::isZero(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits)
+{
+	return bits.none();
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::isNegative(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits)
+{
+	return bits[numberOfIntegerBits + numberOfFractionalBits - 1];
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::isPositive(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits)
+{
+	return (!isNegative(bits) && !isZero(bits));
 }
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 inline FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::FixedPointNumber(std::string valueString)
@@ -139,21 +155,43 @@ template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator*(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
 	std::bitset<numberOfIntegerBits + numberOfFractionalBits> productBits;
+	std::bitset<numberOfIntegerBits + numberOfFractionalBits> thisBits = this->bits;
+	std::bitset<numberOfIntegerBits + numberOfFractionalBits> otherBits = other.bits;
+	bool productIsNegative = false;
+	if (isNegative(thisBits) && isPositive(otherBits))
+	{
+		thisBits = twosComplement(thisBits);
+		productIsNegative = true;
+	}
+	else if (isPositive(thisBits) && isNegative(otherBits))
+	{
+		otherBits = twosComplement(otherBits);
+		productIsNegative = true;
+	}
+	else if (isNegative(thisBits) && isNegative(otherBits))
+	{
+		thisBits = twosComplement(thisBits);
+		otherBits = twosComplement(otherBits);
+	}
 	for (int bitNumber = 0; bitNumber < numberOfFractionalBits; bitNumber++)
 	{
-		if (other.bits[bitNumber])
+		if (otherBits[bitNumber])
 		{
-			std::bitset<numberOfIntegerBits + numberOfFractionalBits> shiftedBits = this->bits >> (numberOfFractionalBits - bitNumber);
+			std::bitset<numberOfIntegerBits + numberOfFractionalBits> shiftedBits = thisBits >> (numberOfFractionalBits - bitNumber);
 			productBits = addBitsets(productBits, shiftedBits, false);
 		}
 	}
 	for (int bitNumber = numberOfFractionalBits; bitNumber < numberOfIntegerBits + numberOfFractionalBits; bitNumber++)
 	{
-		if (other.bits[bitNumber])
+		if (otherBits[bitNumber])
 		{
-			std::bitset<numberOfIntegerBits + numberOfFractionalBits> shiftedBits = this->bits << (bitNumber - numberOfFractionalBits);
+			std::bitset<numberOfIntegerBits + numberOfFractionalBits> shiftedBits = thisBits << (bitNumber - numberOfFractionalBits);
 			productBits = addBitsets(productBits, shiftedBits, false);
 		}
+	}
+	if (productIsNegative)
+	{
+		productBits = twosComplement(productBits);
 	}
 	return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>(productBits, std::min(this->numberOfDecimalPlaces, other.numberOfDecimalPlaces));
 }
@@ -161,11 +199,58 @@ template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator/(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
 	// TODO: Implement division operator
+
 	return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>();
 }
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator%(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
-	// TODO: Implement modulo operator
-	return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>();
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> remainder = *this;
+	while (remainder >= other)
+	{
+		remainder -= other;
+	}
+	return remainder;
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator==(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
+{
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> difference = *this - other;
+	return isZero(difference.bits);
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator!=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
+{
+	return !(*this == other);
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator<(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
+{
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> difference = *this - other;
+	return isNegative(difference.bits);
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator<=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
+{
+	return (*this < other) || (*this == other);
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator>(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
+{
+	return !(*this <= other);
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator>=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
+{
+	return !(*this < other);
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator+=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other)
+{
+	*this = *this + other;
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator-=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other)
+{
+	*this += -other;
 }

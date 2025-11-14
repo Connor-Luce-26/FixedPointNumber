@@ -12,7 +12,10 @@ private:
 	std::bitset<numberOfIntegerBits + numberOfFractionalBits> bits;
 	int numberOfDecimalPlaces;
 	static std::bitset<numberOfIntegerBits + numberOfFractionalBits> twosComplement(std::bitset<numberOfIntegerBits + numberOfFractionalBits> bits);
-	static std::bitset<numberOfIntegerBits + numberOfFractionalBits> addBitsets(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet1, const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet2, const bool carryIn);
+	static std::bitset<numberOfIntegerBits + numberOfFractionalBits> addBitsets(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet1, const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet2, bool carryIn);
+	static bool isZero(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits);
+	static bool isNegative(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits);
+	static bool isPositive(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits);
 public:
 	FixedPointNumber(std::string valueString = "0");
 	FixedPointNumber(std::bitset<numberOfIntegerBits + numberOfFractionalBits> bits, int numberOfDecimalPlaces = 0);
@@ -28,6 +31,14 @@ public:
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator*(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>& other) const;
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator/(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>& other) const;
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator%(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>& other) const;
+	bool operator==(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
+	bool operator!=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
+	bool operator<(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
+	bool operator<=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
+	bool operator>(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
+	bool operator>=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
+	void operator+=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
+	void operator-=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
 };
 #endif
 
