@@ -1,6 +1,18 @@
 #include "FixedPointNumber.hpp"
 template <int numberOfIntegerBits, int numberOfFractionalBits>
-std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::twosComplement(std::bitset<numberOfIntegerBits + numberOfFractionalBits> bits)
+int FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::positionOfMostSignificantBit(std::bitset<numberOfIntegerBits + numberOfFractionalBits> bits)
+{
+	for (int bitNumber = numberOfIntegerBits + numberOfFractionalBits - 1; bitNumber >= 0; bitNumber--)
+	{
+		if (bits[bitNumber])
+		{
+			return bitNumber;
+		}
+	}
+	return -1;
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::twosComplement(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits)
 {
 	std::bitset<numberOfIntegerBits + numberOfFractionalBits> copyBits = bits;
 	copyBits.flip();
@@ -21,6 +33,11 @@ std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numbe
 	return sumBits;
 }
 template <int numberOfIntegerBits, int numberOfFractionalBits>
+std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::subtractBitsets(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet1, const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet2)
+{
+	return addBitsets(bitSet1, twosComplement(bitSet2), false);
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
 bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::isZero(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits)
 {
 	return bits.none();
@@ -34,6 +51,26 @@ template <int numberOfIntegerBits, int numberOfFractionalBits>
 bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::isPositive(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits)
 {
 	return (!isNegative(bits) && !isZero(bits));
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::setNumberOfDecimalPlaces(int numberOfDecimalPlaces)
+{
+	this->numberOfDecimalPlaces = numberOfDecimalPlaces;
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::reciprocal() const
+{
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> thisValue = *this;
+	thisValue.setNumberOfDecimalPlaces(INT_MAX);
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> currentReciprocal = FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>(1);
+	currentReciprocal.bits >>= positionOfMostSignificantBit(thisValue.bits) - numberOfFractionalBits;
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> previousReciprocal;
+	while (!(thisValue * currentReciprocal == 1) && previousReciprocal != currentReciprocal)
+	{
+		previousReciprocal = currentReciprocal;
+		currentReciprocal = currentReciprocal * ((-thisValue * currentReciprocal) + 2);
+	}
+	return currentReciprocal;
 }
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 inline FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::FixedPointNumber(std::string valueString)
@@ -136,6 +173,18 @@ int FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::getNumberOfDe
 	return this->numberOfDecimalPlaces;
 }
 template <int numberOfIntegerBits, int numberOfFractionalBits>
+FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::absoluteValue() const
+{
+	if (*this < 0)
+	{
+		return -(*this);
+	}
+	else
+	{
+		return *this;
+	}
+}
+template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator+(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
 	std::bitset<numberOfIntegerBits + numberOfFractionalBits> sumBits = addBitsets(this->bits, other.bits, false);
@@ -198,9 +247,30 @@ FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<n
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator/(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
-	// TODO: Implement division operator
-
-	return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>();
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> dividend = *this;
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> divisor = other;
+	if (other == 0)
+	{
+		throw std::runtime_error("Division by zero");
+	}
+	bool isQuotientNegative = false;
+	if (((dividend > 0) && (divisor < 0)) || ((dividend < 0) && (divisor > 0)))
+	{
+		isQuotientNegative = true;
+	}
+	else
+	{
+		isQuotientNegative = false;
+	}
+	dividend = dividend.absoluteValue();
+	divisor = divisor.absoluteValue();
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> quotient = dividend * divisor.reciprocal();
+	quotient.setNumberOfDecimalPlaces(std::min(dividend.getNumberOfDecimalPlaces(), divisor.getNumberOfDecimalPlaces()));
+	if (isQuotientNegative)
+	{
+		quotient = -quotient;
+	}
+	return quotient;
 }
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator%(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const

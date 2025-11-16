@@ -174,8 +174,8 @@ void testDivisionOperator()
 {
 	try
 	{
-		FixedPointNumber<8, 8> number1("7.0");
-		FixedPointNumber<8, 8> number2("2.0");
+		FixedPointNumber<8, 8> number1("10.00");
+		FixedPointNumber<8, 8> number2("3.00");
 		FixedPointNumber<8, 8> quotient = number1 / number2;
 		std::cout << "Division operator: " << number1.toString() << " / " << number2.toString() << " = " << quotient.toString() << std::endl;
 	}
