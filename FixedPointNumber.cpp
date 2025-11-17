@@ -1,4 +1,6 @@
 #include "FixedPointNumber.hpp"
+#include <sstream>
+#include <iomanip>
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 int FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::positionOfMostSignificantBit(std::bitset<numberOfIntegerBits + numberOfFractionalBits> bits)
 {
@@ -133,13 +135,11 @@ FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::~FixedPointNumber
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 std::string FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::toString() const
 {
-	std::string result = "";
-	bool isNegative = this->bits[numberOfIntegerBits + numberOfFractionalBits - 1];
+	bool isNegative = *this < 0;
 	std::bitset<numberOfIntegerBits + numberOfFractionalBits> absoluteValueBits = this->bits;
 	if (isNegative)
 	{
 		absoluteValueBits = twosComplement(absoluteValueBits);
-		result += "-";
 	}
 	uint64_t integerPart = 0;
 	for (int bitNumber = numberOfIntegerBits - 1; bitNumber >= 0; bitNumber--)
@@ -151,10 +151,33 @@ std::string FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::toStr
 	{
 		fractionalPart += absoluteValueBits[numberOfFractionalBits - bitNumber - 1] * std::pow(2, -bitNumber - 1);
 	}
-	result += std::to_string(integerPart);
-	result += ".";
-	result += std::to_string(static_cast<uint64_t>(std::round(fractionalPart * std::pow(10, this->numberOfDecimalPlaces == INT_MAX ? 0 : this->numberOfDecimalPlaces))));
-	return result;
+	// TODO: clean this up
+	int N = (this->numberOfDecimalPlaces == INT_MAX ? 0 : this->numberOfDecimalPlaces);
+	double scale = std::pow(10.0, N);
+	uint64_t fracDigits = static_cast<uint64_t>(std::round(fractionalPart * scale));
+
+	// Handle rounding carry into integer part (e.g., 1.999 -> 2.00)
+	if (N > 0 && fracDigits >= static_cast<uint64_t>(scale))
+	{
+		integerPart += 1;
+		fracDigits = 0;
+	}
+
+	std::ostringstream oss;
+	if (isNegative)
+	{
+		oss << '-';
+	}
+	oss << integerPart;
+	if (N > 0)
+	{
+		oss << '.' << std::setw(N) << std::setfill('0') << fracDigits;
+	}
+	else
+	{
+		oss << ".0";
+	}
+	return oss.str();
 }
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::print() const
