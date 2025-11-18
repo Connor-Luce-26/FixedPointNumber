@@ -1,3 +1,9 @@
+/**
+ * @file FixedPointNumber.hpp
+ * @author Robert Connor Luce
+ * @brief Header file for FixedPointNumber class for fixed-point arithmetic.
+ * @date November 17, 2025
+ */
 #include <cstdint>
 #include <string>
 #include <cmath>
@@ -5,6 +11,11 @@
 #include <bitset>
 #ifndef FIXEDPOINTNUMBER_HPP
 #define FIXEDPOINTNUMBER_HPP
+/**
+ * @brief Class template for fixed-point numbers with specified integer and fractional bits.
+ * @tparam numberOfIntegerBits Number of bits allocated for the integer part.
+ * @tparam numberOfFractionalBits Number of bits allocated for the fractional part.
+ */
 template<int numberOfIntegerBits, int numberOfFractionalBits>
 class FixedPointNumber
 {
@@ -36,6 +47,12 @@ public:
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator*(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>& other) const;
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator/(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>& other) const;
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator%(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>& other) const;
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator<<(int amountToShift) const;
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator>>(int amountToShift) const;
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator~() const;
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator&(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator|(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator^(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
 	bool operator==(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
 	bool operator!=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
 	bool operator<(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
@@ -44,5 +61,19 @@ public:
 	bool operator>=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
 	void operator+=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
 	void operator-=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
+	void operator*=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
+	void operator/=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
+	void operator%=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
+	void operator<<=(int amountToShift);
+	void operator>>=(int amountToShift);
+	void operator&=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
+	void operator|=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
+	void operator^=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
+	void operator++();
+	void operator--();
+	bool operator!() const;
+	bool operator&&(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
+	bool operator||(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
+	
 };
 #endif

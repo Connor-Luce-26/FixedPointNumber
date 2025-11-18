@@ -1,6 +1,19 @@
+/**
+ * @file FixedPointNumber.cpp
+ * @author Robert Connor Luce
+ * @brief Implementation of FixedPointNumber class for fixed-point arithmetic.
+ * @date November 17, 2025
+ */
 #include "FixedPointNumber.hpp"
 #include <sstream>
 #include <iomanip>
+/**
+ * @brief Find the position of the most significant bit set to 1.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param bits 
+ * @return int 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 int FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::positionOfMostSignificantBit(std::bitset<numberOfIntegerBits + numberOfFractionalBits> bits)
 {
@@ -13,6 +26,13 @@ int FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::positionOfMos
 	}
 	return -1;
 }
+/**
+ * @brief Compute the two's complement of a bitset.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param bits 
+ * @return std::bitset<numberOfIntegerBits + numberOfFractionalBits> 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::twosComplement(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits)
 {
@@ -20,6 +40,15 @@ std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numbe
 	copyBits.flip();
 	return addBitsets(copyBits, std::bitset<numberOfIntegerBits + numberOfFractionalBits>(), true);
 }
+/**
+ * @brief Add two bitsets with an optional carry-in.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param bitSet1 
+ * @param bitSet2 
+ * @param carryIn 
+ * @return std::bitset<numberOfIntegerBits + numberOfFractionalBits> 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::addBitsets(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet1, const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet2, bool carryIn)
 {
@@ -34,31 +63,75 @@ std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numbe
 	}
 	return sumBits;
 }
+/**
+ * @brief Subtract two bitsets.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param bitSet1 
+ * @param bitSet2 
+ * @return std::bitset<numberOfIntegerBits + numberOfFractionalBits> 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 std::bitset<numberOfIntegerBits + numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::subtractBitsets(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet1, const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bitSet2)
 {
 	return addBitsets(bitSet1, twosComplement(bitSet2), false);
 }
+/**
+ * @brief Check if the bitset represents zero.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param bits 
+ * @return true 
+ * @return false 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::isZero(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits)
 {
 	return bits.none();
 }
+/**
+ * @brief Check if the bitset represents a negative number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param bits 
+ * @return true 
+ * @return false 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::isNegative(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits)
 {
 	return bits[numberOfIntegerBits + numberOfFractionalBits - 1];
 }
+/**
+ * @brief Check if the bitset represents a positive number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param bits 
+ * @return true 
+ * @return false 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::isPositive(const std::bitset<numberOfIntegerBits + numberOfFractionalBits> &bits)
 {
 	return (!isNegative(bits) && !isZero(bits));
 }
+/**
+ * @brief Set the number of decimal places for the fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param numberOfDecimalPlaces 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::setNumberOfDecimalPlaces(int numberOfDecimalPlaces)
 {
 	this->numberOfDecimalPlaces = numberOfDecimalPlaces;
 }
+/**
+ * @brief Compute the reciprocal of the fixed-point number using Newton-Raphson method.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::reciprocal() const
 {
@@ -74,6 +147,12 @@ FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<n
 	}
 	return currentReciprocal;
 }
+/**
+ * @brief Construct a new Fixed Point Number object from a string representation.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param valueString 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 inline FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::FixedPointNumber(std::string valueString)
 {
@@ -116,22 +195,46 @@ inline FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::FixedPoint
 		this->bits = twosComplement(this->bits);
 	}
 }
+/**
+ * @brief Construct a new Fixed Point Number object from a bitset representation.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param bits 
+ * @param numberOfDecimalPlaces 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::FixedPointNumber(std::bitset<numberOfIntegerBits + numberOfFractionalBits> bits, int numberOfDecimalPlaces)
 {
 	this->bits = bits;
 	this->numberOfDecimalPlaces = numberOfDecimalPlaces;
 }
+/**
+ * @brief Construct a new Fixed Point Number object from an integer value.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param integerValue 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::FixedPointNumber(int integerValue)
 {
 	*this = FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>(std::to_string(integerValue));
 	this->numberOfDecimalPlaces = INT_MAX;
 }
+/**
+ * @brief Destroy the Fixed Point Number object.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::~FixedPointNumber()
 {
 }
+/**
+ * @brief Convert the fixed-point number to its string representation.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @return std::string 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 std::string FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::toString() const
 {
@@ -151,50 +254,68 @@ std::string FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::toStr
 	{
 		fractionalPart += absoluteValueBits[numberOfFractionalBits - bitNumber - 1] * std::pow(2, -bitNumber - 1);
 	}
-	// TODO: clean this up
-	int N = (this->numberOfDecimalPlaces == INT_MAX ? 0 : this->numberOfDecimalPlaces);
-	double scale = std::pow(10.0, N);
-	uint64_t fracDigits = static_cast<uint64_t>(std::round(fractionalPart * scale));
-
-	// Handle rounding carry into integer part (e.g., 1.999 -> 2.00)
-	if (N > 0 && fracDigits >= static_cast<uint64_t>(scale))
+	int numberOfDecimalPlaces = (this->numberOfDecimalPlaces == INT_MAX ? 0 : this->numberOfDecimalPlaces);
+	double scale = std::pow(10.0, numberOfDecimalPlaces);
+	uint64_t fractionalDigits = static_cast<uint64_t>(std::round(fractionalPart * scale));
+	if (numberOfDecimalPlaces > 0 && fractionalDigits >= static_cast<uint64_t>(scale))
 	{
 		integerPart += 1;
-		fracDigits = 0;
+		fractionalDigits = 0;
 	}
-
-	std::ostringstream oss;
+	std::ostringstream outputStringStream;
 	if (isNegative)
 	{
-		oss << '-';
+		outputStringStream << '-';
 	}
-	oss << integerPart;
-	if (N > 0)
+	outputStringStream << integerPart;
+	if (numberOfDecimalPlaces > 0)
 	{
-		oss << '.' << std::setw(N) << std::setfill('0') << fracDigits;
+		outputStringStream << '.' << std::setw(numberOfDecimalPlaces) << std::setfill('0') << fractionalDigits;
 	}
 	else
 	{
-		oss << ".0";
+		outputStringStream << ".0";
 	}
-	return oss.str();
+	return outputStringStream.str();
 }
+/**
+ * @brief Print the fixed-point number to standard output.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::print() const
 {
 	std::cout << this->toString();
 }
+/**
+ * @brief Print the fixed-point number followed by a newline to standard output.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::printLine() const
 {
 	this->print();
 	std::cout << std::endl;
 }
+/**
+ * @brief Get the number of decimal places for the fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @return int 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 int FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::getNumberOfDecimalPlaces() const
 {
 	return this->numberOfDecimalPlaces;
 }
+/**
+ * @brief Get the absolute value of the fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::absoluteValue() const
 {
@@ -207,22 +328,49 @@ FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<n
 		return *this;
 	}
 }
+/**
+ * @brief Add two fixed-point numbers.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The other fixed-point number to add.
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> The sum of the two fixed-point numbers.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator+(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
 	std::bitset<numberOfIntegerBits + numberOfFractionalBits> sumBits = addBitsets(this->bits, other.bits, false);
 	return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>(sumBits, std::min(this->numberOfDecimalPlaces, other.numberOfDecimalPlaces));
 }
+/**
+ * @brief Negate the fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> The negated fixed-point number.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator-() const
 {
 	return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>(twosComplement(this->bits), this->numberOfDecimalPlaces);
 }
+/**
+ * @brief Subtract another fixed-point number from this one.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The other fixed-point number to subtract.
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> The result of the subtraction.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator-(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
 	return *this + (-other);
 }
+/**
+ * @brief Multiply two fixed-point numbers.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other 
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> 
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator*(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
@@ -267,6 +415,13 @@ FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<n
 	}
 	return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>(productBits, std::min(this->numberOfDecimalPlaces, other.numberOfDecimalPlaces));
 }
+/**
+ * @brief Divide this fixed-point number by another.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The divisor fixed-point number.
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> The result of the division.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator/(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
@@ -295,6 +450,13 @@ FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<n
 	}
 	return quotient;
 }
+/**
+ * @brief Calculate the remainder of division between two fixed-point numbers.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The divisor fixed-point number.
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> The remainder after division.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator%(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
@@ -305,45 +467,334 @@ FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<n
 	}
 	return remainder;
 }
+/**
+ * @brief Shift the fixed-point number to the right by a specified amount.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param amountToShift The number of bits to shift right.
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> The shifted fixed-point number.
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator<<(int amountToShift) const
+{
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> shiftedValue = *this;
+	shiftedValue.bits <<= amountToShift;
+	return shiftedValue;
+}
+/**
+ * @brief Shift the fixed-point number to the left by a specified amount.
+ * @tparam numberOfIntegerBits
+ * @tparam numberOfFractionalBits
+ * @param amountToShift The number of bits to shift left.
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> The shifted fixed-point number.
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator>>(int amountToShift) const
+{
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> shiftedValue = *this;
+	shiftedValue.bits >>= amountToShift;
+	return shiftedValue;
+}
+/**
+ * @brief Bitwise NOT operation on the fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator~() const
+{
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> result = *this;
+	result.bits.flip();
+	return result;
+}
+/**
+ * @brief Bitwise AND operation on the fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other 
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator&(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
+{
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> result = *this;
+	result.bits &= other.bits;
+	return result;
+}
+/**
+ * @brief Bitwise OR operation on the fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other 
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator|(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
+{
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> result = *this;
+	result.bits |= other.bits;
+	return result;
+}
+/**
+ * @brief Bitwise XOR operation on the fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other 
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator^(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
+{
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> result = *this;
+	result.bits ^= other.bits;
+	return result;
+}
+/**
+ * @brief Check if two fixed-point numbers are equal.
+ * @tparam numberOfIntegerBits
+ * @tparam numberOfFractionalBits
+ * @param other The other fixed-point number to compare.
+ * @return true If the two numbers are equal.
+ * @return false If the two numbers are not equal.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator==(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> difference = *this - other;
 	return isZero(difference.bits);
 }
+/**
+ * @brief Check if two fixed-point numbers are not equal.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The other fixed-point number to compare.
+ * @return true If the two numbers are not equal.
+ * @return false If the two numbers are equal.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator!=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
 	return !(*this == other);
 }
+/**
+ * @brief Check if this fixed-point number is less than another.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The other fixed-point number to compare.
+ * @return true If this number is less than the other.
+ * @return false If this number is not less than the other.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator<(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> difference = *this - other;
 	return isNegative(difference.bits);
 }
+/**
+ * @brief Check if this fixed-point number is less than or equal to another.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The other fixed-point number to compare.
+ * @return true If this number is less than or equal to the other.
+ * @return false If this number is greater than the other.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator<=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
 	return (*this < other) || (*this == other);
 }
+/**
+ * @brief Check if this fixed-point number is greater than another.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The other fixed-point number to compare.
+ * @return true If this number is greater than the other.
+ * @return false If this number is not greater than the other.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator>(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
 	return !(*this <= other);
 }
+/**
+ * @brief Check if this fixed-point number is greater than or equal to another.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The other fixed-point number to compare.
+ * @return true If this number is greater than or equal to the other.
+ * @return false If this number is less than the other.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator>=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
 {
 	return !(*this < other);
 }
+/**
+ * @brief Add another fixed-point number to this one in place.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The other fixed-point number to add.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator+=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other)
 {
 	*this = *this + other;
 }
+/**
+ * @brief Subtract another fixed-point number from this one in place.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The other fixed-point number to subtract.
+ */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator-=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other)
 {
 	*this += -other;
+}
+/**
+ * @brief Multiply this fixed-point number by another in place.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The other fixed-point number to multiply by.
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator*=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other)
+{
+	*this = *this * other;
+}
+/**
+ * @brief Divide this fixed-point number by another in place.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The other fixed-point number to divide by.
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator/=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other)
+{
+	*this = *this / other;
+}
+/**
+ * @brief Calculate the remainder of division between this fixed-point number and another in place.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other The other fixed-point number to divide by.
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator%=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other)
+{
+	*this = *this % other;
+}
+/**
+ * @brief Shift this fixed-point number to the left by a specified amount in place.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param amountToShift 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator<<=(int amountToShift)
+{
+	*this = *this << amountToShift;
+}
+/**
+ * @brief Shift this fixed-point number to the right by a specified amount in place.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param amountToShift 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator>>=(int amountToShift)
+{
+	*this = *this >> amountToShift;
+}
+/**
+ * @brief Bitwise AND operation in place on this fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator&=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other)
+{
+	*this = *this & other;
+}
+/**
+ * @brief Bitwise OR operation in place on this fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator|=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other)
+{
+	*this = *this | other;
+}
+/**
+ * @brief Bitwise XOR operation in place on this fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator^=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other)
+{
+	*this = *this ^ other;
+}
+/**
+ * @brief Increment the fixed-point number by one.
+ * @tparam numberOfIntegerBits
+ * @tparam numberOfFractionalBits
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator++()
+{
+	*this += FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>(1);
+}
+/**
+ * @brief Decrement the fixed-point number by one.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator--()
+{
+	*this -= FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>(1);
+}
+/**
+ * @brief Logical NOT operation on the fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @return true 
+ * @return false 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator!() const
+{
+	return (*this == 0);
+}
+/**
+ * @brief Logical AND operation on the fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other 
+ * @return true 
+ * @return false 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator&&(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
+{
+	return ((*this != 0) && (other != 0));
+}
+/**
+ * @brief Logical OR operation on the fixed-point number.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param other 
+ * @return true 
+ * @return false 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+bool FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator||(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const
+{
+	return ((*this != 0) || (other != 0));
 }
