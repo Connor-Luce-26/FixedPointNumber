@@ -1,5 +1,14 @@
+/**
+ * @file FixedPointNumberTest.cpp
+ * @author Robert Connor Luce
+ * @brief Tests for FixedPointNumber class.
+ * @date November 18, 2025
+ */
 #include "FixedPointNumber.cpp"
 #include <iostream>
+/**
+ * @brief Tests the default constructor of FixedPointNumber.
+ */
 void testDefaultConstructor()
 {
 	try
@@ -12,6 +21,9 @@ void testDefaultConstructor()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the positive string constructor of FixedPointNumber.
+ */
 void testPositiveStringConstructor()
 {
 	try
@@ -24,6 +36,9 @@ void testPositiveStringConstructor()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the negative string constructor of FixedPointNumber.
+ */
 void testNegativeStringConstructor()
 {
 	try
@@ -36,6 +51,9 @@ void testNegativeStringConstructor()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the integer constructor of FixedPointNumber.
+ */
 void testIntegerConstructor()
 {
 	try
@@ -48,6 +66,9 @@ void testIntegerConstructor()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the addition operator of FixedPointNumber.
+ */
 void testAdditionOperator()
 {
 	try
@@ -62,6 +83,9 @@ void testAdditionOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the subtraction operator of FixedPointNumber.
+ */
 void testSubtractionOperator()
 {
 	try
@@ -76,6 +100,9 @@ void testSubtractionOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the getNumberOfDecimalPlaces method of FixedPointNumber.
+ */
 void testGetNumberOfDecimalPlaces()
 {
 	try
@@ -88,6 +115,9 @@ void testGetNumberOfDecimalPlaces()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests unary negation and addition to zero.
+ */
 void testUnaryNegationAndZero()
 {
 	try
@@ -102,6 +132,9 @@ void testUnaryNegationAndZero()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests addition involving a negative fixed-point number.
+ */
 void testAdditionWithNegative()
 {
 	try
@@ -116,6 +149,9 @@ void testAdditionWithNegative()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the fractional rounding behavior of FixedPointNumber.
+ */
 void testFractionalRounding()
 {
 	try
@@ -128,6 +164,9 @@ void testFractionalRounding()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the multiplication operator of FixedPointNumber.
+ */
 void testMultiplicationOperator()
 {
 	try
@@ -142,6 +181,9 @@ void testMultiplicationOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests multiplication involving a negative fixed-point number.
+ */
 void testNegativeMultiplication()
 {
 	try
@@ -156,6 +198,9 @@ void testNegativeMultiplication()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the division operator of FixedPointNumber.
+ */
 void testDivisionOperator()
 {
 	try
@@ -170,6 +215,9 @@ void testDivisionOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the modulo operator of FixedPointNumber.
+ */
 void testModuloOperator()
 {
 	try
@@ -184,6 +232,9 @@ void testModuloOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the bitwise left shift operator of FixedPointNumber.
+ */
 void testBitShiftLeftOperator()
 {
 	try
@@ -197,6 +248,9 @@ void testBitShiftLeftOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the bitwise right shift operator of FixedPointNumber.
+ */
 void testBitShiftRightOperator()
 {
 	try
@@ -210,6 +264,9 @@ void testBitShiftRightOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the bitwise NOT operator of FixedPointNumber.
+ */
 void testBitwiseNotOperator()
 {
 	try
@@ -223,6 +280,9 @@ void testBitwiseNotOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the bitwise AND operator of FixedPointNumber.
+ */
 void testBitwiseAndOperator()
 {
 	try
@@ -237,6 +297,9 @@ void testBitwiseAndOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the bitwise OR operator of FixedPointNumber.
+ */
 void testBitwiseOrOperator()
 {
 	try
@@ -251,6 +314,9 @@ void testBitwiseOrOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the bitwise XOR operator of FixedPointNumber.
+ */
 void testBitwiseXorOperator()
 {
 	try
@@ -265,6 +331,9 @@ void testBitwiseXorOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the equality operator of FixedPointNumber.
+ */
 void testEqualityOperator()
 {
 	try
@@ -285,6 +354,9 @@ void testEqualityOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the inequality operator of FixedPointNumber.
+ */
 void testInequalityOperator()
 {
 	try
@@ -305,6 +377,9 @@ void testInequalityOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the less-than operator of FixedPointNumber.
+ */
 void testLessThanOperator()
 {
 	try
@@ -325,6 +400,9 @@ void testLessThanOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the less-than-or-equal-to operator of FixedPointNumber.
+ */
 void testLessThanOrEqualToOperator()
 {
 	try
@@ -345,6 +423,9 @@ void testLessThanOrEqualToOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the greater-than operator of FixedPointNumber.
+ */
 void testGreaterThanOperator()
 {
 	try
@@ -365,6 +446,9 @@ void testGreaterThanOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the greater-than-or-equal-to operator of FixedPointNumber.
+ */
 void testGreaterThanOrEqualToOperator()
 {
 	try
@@ -385,6 +469,9 @@ void testGreaterThanOrEqualToOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the plus-equals operator of FixedPointNumber.
+ */
 void testPlusEqualsOperator()
 {
 	try
@@ -400,6 +487,9 @@ void testPlusEqualsOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the minus-equals operator of FixedPointNumber.
+ */
 void testMinusEqualsOperator()
 {
 	try
@@ -415,6 +505,9 @@ void testMinusEqualsOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the multiplication-equals operator of FixedPointNumber.
+ */
 void testMultiplicationEqualsOperator()
 {
 	try
@@ -430,6 +523,9 @@ void testMultiplicationEqualsOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the division-equals operator of FixedPointNumber.
+ */
 void testDivisionEqualsOperator()
 {
 	try
@@ -445,6 +541,9 @@ void testDivisionEqualsOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the modulo-equals operator of FixedPointNumber.
+ */
 void testModuloEqualsOperator()
 {
 	try
@@ -460,6 +559,9 @@ void testModuloEqualsOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the bitwise left-shift-equals operator of FixedPointNumber.
+ */
 void testBitShiftLeftEqualsOperator()
 {
 	try
@@ -474,6 +576,9 @@ void testBitShiftLeftEqualsOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the bitwise right-shift-equals operator of FixedPointNumber.
+ */
 void testBitShiftRightEqualsOperator()
 {
 	try
@@ -488,6 +593,9 @@ void testBitShiftRightEqualsOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the bitwise AND-equals operator of FixedPointNumber.
+ */
 void testBitwiseAndEqualsOperator()
 {
 	try
@@ -503,6 +611,9 @@ void testBitwiseAndEqualsOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the bitwise OR-equals operator of FixedPointNumber.
+ */
 void testBitwiseOrEqualsOperator()
 {
 	try
@@ -518,6 +629,9 @@ void testBitwiseOrEqualsOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the bitwise XOR-equals operator of FixedPointNumber.
+ */
 void testBitwiseXorEqualsOperator()
 {
 	try
@@ -533,6 +647,9 @@ void testBitwiseXorEqualsOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the increment operator of FixedPointNumber.
+ */
 void testIncrementOperator()
 {
 	try
@@ -547,6 +664,9 @@ void testIncrementOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the decrement operator of FixedPointNumber.
+ */
 void testDecrementOperator()
 {
 	try
@@ -561,6 +681,9 @@ void testDecrementOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the logical NOT operator of FixedPointNumber.
+ */
 void testLogicalNotOperator()
 {
 	try
@@ -580,6 +703,9 @@ void testLogicalNotOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Tests the logical AND operator of FixedPointNumber.
+ */
 void testLogicalAndOperator()
 {
 	try
@@ -600,6 +726,9 @@ void testLogicalAndOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 } 
+/**
+ * @brief Tests the logical OR operator of FixedPointNumber.
+ */
 void testLogicalOrOperator()
 {
 	try
@@ -620,6 +749,9 @@ void testLogicalOrOperator()
 		std::cerr << exception.what() << std::endl;
 	}
 }
+/**
+ * @brief Main function to run all tests.
+ */
 int main()
 {
 	testDefaultConstructor();

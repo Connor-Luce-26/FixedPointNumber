@@ -2,7 +2,7 @@
  * @file FixedPointNumber.hpp
  * @author Robert Connor Luce
  * @brief Header file for FixedPointNumber class for fixed-point arithmetic.
- * @date November 17, 2025
+ * @date November 18, 2025
  */
 #include <cstdint>
 #include <string>

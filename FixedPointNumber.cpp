@@ -2,7 +2,7 @@
  * @file FixedPointNumber.cpp
  * @author Robert Connor Luce
  * @brief Implementation of FixedPointNumber class for fixed-point arithmetic.
- * @date November 17, 2025
+ * @date November 18, 2025
  */
 #include "FixedPointNumber.hpp"
 #include <sstream>
