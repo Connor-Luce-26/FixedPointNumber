@@ -4,7 +4,7 @@
  * @brief Tests for FixedPointNumber class.
  * @date November 18, 2025
  */
-#include "FixedPointNumber.cpp"
+#include "FixedPointNumber.hpp"
 #include <iostream>
 /**
  * @brief Tests the default constructor of FixedPointNumber.
