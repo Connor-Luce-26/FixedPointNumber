@@ -311,8 +311,7 @@ FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::~FixedPointNumber
  */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 inline FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::maximum(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> fixedPointNumbers[], int fixedPointNumbersSize)
-{
-	// TODO: Implement maximum function
+{w
 	if (fixedPointNumbersSize == 0)
 	{
 		throw std::runtime_error("Cannot determine maximum of an empty array.");
@@ -338,7 +337,6 @@ inline FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointN
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 inline FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::minimum(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> fixedPointNumbers[], int fixedPointNumbersSize)
 {
-	// TODO: Implement minimum function
 		if (fixedPointNumbersSize == 0)
 	{
 		throw std::runtime_error("Cannot determine minimum of an empty array.");
