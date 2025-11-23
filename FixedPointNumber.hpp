@@ -2,7 +2,6 @@
  * @file FixedPointNumber.hpp
  * @author Robert Connor Luce
  * @brief Header file for FixedPointNumber class for fixed-point arithmetic.
- * @date November 18, 2025
  */
 #include <cstdint>
 #include <string>
@@ -38,6 +37,8 @@ public:
 	FixedPointNumber(std::bitset<numberOfIntegerBits + numberOfFractionalBits> bits, int numberOfDecimalPlaces = INT_MAX);
 	FixedPointNumber(int integerValue);
 	~FixedPointNumber();
+	static FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> maximum(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> fixedPointNumbers[], int fixedPointNumbersSize);
+	static FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> minimum(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> fixedPointNumbers[], int fixedPointNumbersSize);
 	std::string toString() const;
 	void print() const;
 	void printLine() const;
@@ -301,10 +302,62 @@ FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::~FixedPointNumber
 {
 }
 /**
- * @brief Convert the fixed-point number to its string representation.
+ * @brief Find the maximum fixed-point number from an array.
  * @tparam numberOfIntegerBits 
  * @tparam numberOfFractionalBits 
- * @return std::string 
+ * @param fixedPointNumbers
+ * @param fixedPointNumbersSize
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+inline FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::maximum(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> fixedPointNumbers[], int fixedPointNumbersSize)
+{
+	// TODO: Implement maximum function
+	if (fixedPointNumbersSize == 0)
+	{
+		throw std::runtime_error("Cannot determine maximum of an empty array.");
+	}
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> largestNumber = fixedPointNumbers[0];
+	for (int index = 1; index < fixedPointNumbersSize; index++)
+	{
+		if (fixedPointNumbers[index] > largestNumber)
+		{
+			largestNumber = fixedPointNumbers[index];
+		}
+	}
+	return largestNumber;
+}
+/**
+ * @brief Find the minimum fixed-point number from an array.
+ * @tparam numberOfIntegerBits 
+ * @tparam numberOfFractionalBits 
+ * @param fixedPointNumbers 
+ * @param fixedPointNumbersSize
+ * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> 
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+inline FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::minimum(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> fixedPointNumbers[], int fixedPointNumbersSize)
+{
+	// TODO: Implement minimum function
+		if (fixedPointNumbersSize == 0)
+	{
+		throw std::runtime_error("Cannot determine minimum of an empty array.");
+	}
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> smallestNumber = fixedPointNumbers[0];
+	for (int index = 1; index < fixedPointNumbersSize; index++)
+	{
+		if (fixedPointNumbers[index] < smallestNumber)
+		{
+			smallestNumber = fixedPointNumbers[index];
+		}
+	}
+	return smallestNumber;
+}
+/**
+ * @brief Convert the fixed-point number to its string representation.
+ * @tparam numberOfIntegerBits
+ * @tparam numberOfFractionalBits
+ * @return std::string
  */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 std::string FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::toString() const
@@ -401,8 +454,8 @@ FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<n
 }
 /**
  * @brief Add two fixed-point numbers.
- * @tparam numberOfIntegerBits 
- * @tparam numberOfFractionalBits 
+ * @tparam numberOfIntegerBits
+ * @tparam numberOfFractionalBits
  * @param other The other fixed-point number to add.
  * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> The sum of the two fixed-point numbers.
  */

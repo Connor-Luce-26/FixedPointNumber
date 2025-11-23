@@ -2,10 +2,14 @@
  * @file FixedPointNumberTest.cpp
  * @author Robert Connor Luce
  * @brief Tests for FixedPointNumber class.
- * @date November 18, 2025
  */
 #include "FixedPointNumber.hpp"
 #include <iostream>
+#include <fstream>
+#ifndef TEST_OUTPUT_FILE
+#define TEST_OUTPUT_FILE "FixedPointNumberTestOutput.txt"
+#endif
+std::ofstream file = std::ofstream(TEST_OUTPUT_FILE);
 /**
  * @brief Tests the default constructor of FixedPointNumber.
  */
@@ -15,10 +19,12 @@ void testDefaultConstructor()
 	{
 		FixedPointNumber<8, 8> number;
 		std::cout << "Default constructor: " << number.toString() << std::endl;
+		file << "Default constructor: " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -30,10 +36,12 @@ void testPositiveStringConstructor()
 	{
 		FixedPointNumber<8, 8> number("12.34");
 		std::cout << "Positive string constructor: " << number.toString() << std::endl;
+		file << "Positive string constructor: " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -45,10 +53,12 @@ void testNegativeStringConstructor()
 	{
 		FixedPointNumber<8, 8> number("-12.34");
 		std::cout << "Negative string constructor: " << number.toString() << std::endl;
+		file << "Negative string constructor: " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -60,10 +70,85 @@ void testIntegerConstructor()
 	{
 		FixedPointNumber<8, 8> number(42);
 		std::cout << "Integer constructor: " << number.toString() << std::endl;
+		file << "Integer constructor: " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
+	}
+}
+/**
+ * @brief Tests the maximum static method of FixedPointNumber.
+ */
+void testMaximum()
+{
+	try
+	{
+		FixedPointNumber<8, 8> numbers[4] = {FixedPointNumber<8, 8>(0), FixedPointNumber<8, 8>(1), FixedPointNumber<8, 8>(2), FixedPointNumber<8, 8>(3)};
+		FixedPointNumber<8, 8> maximumNumber = FixedPointNumber<8, 8>::maximum(numbers, 4);
+		std::cout << "Maximum: The maximum of the array, " << numbers->toString() << ",  is " << maximumNumber.toString() << std::endl;
+		file << "Maximum: The maximum of the array, " << numbers->toString() << ",  is " << maximumNumber.toString() << std::endl;
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
+	}
+	
+}
+/**
+ * @brief Tests the minimum static method of FixedPointNumber.
+ */
+void testMinimum()
+{
+	try
+	{
+		FixedPointNumber<8, 8> numbers[4] = {FixedPointNumber<8, 8>(0), FixedPointNumber<8, 8>(1), FixedPointNumber<8, 8>(2), FixedPointNumber<8, 8>(3)};
+		FixedPointNumber<8, 8> minimumNumber = FixedPointNumber<8, 8>::minimum(numbers, 4);
+		std::cout << "Minimum: The minimum of the array, " << numbers->toString() << ",  is " << minimumNumber.toString() << std::endl;
+		file << "Minimum: The minimum of the array, " << numbers->toString() << ",  is " << minimumNumber.toString() << std::endl;
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
+	}
+	
+}
+/**
+ * @brief Tests the getNumberOfDecimalPlaces method of FixedPointNumber.
+ */
+void testGetNumberOfDecimalPlaces()
+{
+	try
+	{
+		FixedPointNumber<8, 8> number("12.340");
+		std::cout << "getNumberOfDecimalPlaces: Number of Decimal Places of (\"12.340\") is " << number.getNumberOfDecimalPlaces() << std::endl;
+		file << "getNumberOfDecimalPlaces: Number of Decimal Places of (\"12.340\") is " << number.getNumberOfDecimalPlaces() << std::endl;
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
+	}
+}
+/**
+ * @brief Tests the absoluteValue method of FixedPointNumber.
+ */
+void testAbsoluteValue()
+{
+	try
+	{
+		FixedPointNumber<8, 8> number("-15.75");
+		FixedPointNumber<8, 8> absValue = number.absoluteValue();
+		std::cout << "Absolute value: The absolute value of " << number.toString() << " is " << absValue.toString() << std::endl;
+		file << "Absolute value: The absolute value of " << number.toString() << " is " << absValue.toString() << std::endl;
+	}
+	catch(const std::exception& exception)
+	{
+		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -77,10 +162,12 @@ void testAdditionOperator()
 		FixedPointNumber<8, 8> number2("23.45");
 		FixedPointNumber<8, 8> sum = number1 + number2;
 		std::cout << "Addition operator: " << number1.toString() << " + " << number2.toString() << " = " << sum.toString() << std::endl;
+		file << "Addition operator: " << number1.toString() << " + " << number2.toString() << " = " << sum.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -94,25 +181,12 @@ void testSubtractionOperator()
 		FixedPointNumber<8, 8> number2("12.34");
 		FixedPointNumber<8, 8> difference = number1 - number2;
 		std::cout << "Subtraction operator: " << number1.toString() << " - " << number2.toString() << " = " << difference.toString() << std::endl;
+		file << "Subtraction operator: " << number1.toString() << " - " << number2.toString() << " = " << difference.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
-	}
-}
-/**
- * @brief Tests the getNumberOfDecimalPlaces method of FixedPointNumber.
- */
-void testGetNumberOfDecimalPlaces()
-{
-	try
-	{
-		FixedPointNumber<8, 8> number("12.340");
-		std::cout << "getNumberOfDecimalPlaces (\"12.340\"): " << number.getNumberOfDecimalPlaces() << std::endl;
-	}
-	catch(const std::exception& exception)
-	{
-		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -126,10 +200,12 @@ void testUnaryNegationAndZero()
 		FixedPointNumber<8, 8> neg = -number;
 		FixedPointNumber<8, 8> sum = number + neg;
 		std::cout << "Unary negation: " << number.toString() << " + (" << neg.toString() << ") = " << sum.toString() << std::endl;
+		file << "Unary negation: " << number.toString() << " + (" << neg.toString() << ") = " << sum.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -143,10 +219,12 @@ void testAdditionWithNegative()
 		FixedPointNumber<8, 8> b("-3.25");
 		FixedPointNumber<8, 8> sum = a + b;
 		std::cout << "Addition with negative: " << a.toString() << " + " << b.toString() << " = " << sum.toString() << std::endl;
+		file << "Addition with negative: " << a.toString() << " + " << b.toString() << " = " << sum.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -158,10 +236,12 @@ void testFractionalRounding()
 	{
 		FixedPointNumber<8, 8> number("1.005");
 		std::cout << "Fractional rounding (\"1.005\"): " << number.toString() << std::endl;
+		file << "Fractional rounding (\"1.005\"): " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -175,10 +255,12 @@ void testMultiplicationOperator()
 		FixedPointNumber<8, 8> number2("2.0");
 		FixedPointNumber<8, 8> product = number1 * number2;
 		std::cout << "Multiplication operator: " << number1.toString() << " * " << number2.toString() << " = " << product.toString() << std::endl;
+		file << "Multiplication operator: " << number1.toString() << " * " << number2.toString() << " = " << product.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -192,10 +274,12 @@ void testNegativeMultiplication()
 		FixedPointNumber<8, 8> number2("2.5");
 		FixedPointNumber<8, 8> product = number1 * number2;
 		std::cout << "Negative multiplication: " << number1.toString() << " * " << number2.toString() << " = " << product.toString() << std::endl;
+		file << "Negative multiplication: " << number1.toString() << " * " << number2.toString() << " = " << product.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -209,10 +293,12 @@ void testDivisionOperator()
 		FixedPointNumber<8, 8> number2("3.0");
 		FixedPointNumber<8, 8> quotient = number1 / number2;
 		std::cout << "Division operator: " << number1.toString() << " / " << number2.toString() << " = " << quotient.toString() << std::endl;
+		file << "Division operator: " << number1.toString() << " / " << number2.toString() << " = " << quotient.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -226,10 +312,12 @@ void testModuloOperator()
 		FixedPointNumber<8, 8> number2("3.0");
 		FixedPointNumber<8, 8> remainder = number1 % number2;
 		std::cout << "Modulo operator: " << number1.toString() << " % " << number2.toString() << " = " << remainder.toString() << std::endl;
+		file << "Modulo operator: " << number1.toString() << " % " << number2.toString() << " = " << remainder.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -242,10 +330,12 @@ void testBitShiftLeftOperator()
 		FixedPointNumber<8, 8> number("2.5");
 		FixedPointNumber<8, 8> shifted = number << 2;
 		std::cout << "Bitwise left shift operator: " << number.toString() << " << 2 = " << shifted.toString() << std::endl;
+		file << "Bitwise left shift operator: " << number.toString() << " << 2 = " << shifted.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -258,10 +348,12 @@ void testBitShiftRightOperator()
 		FixedPointNumber<8, 8> number("10.0");
 		FixedPointNumber<8, 8> shifted = number >> 1;
 		std::cout << "Bitwise right shift operator: " << number.toString() << " >> 1 = " << shifted.toString() << std::endl;
+		file << "Bitwise right shift operator: " << number.toString() << " >> 1 = " << shifted.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -274,10 +366,12 @@ void testBitwiseNotOperator()
 		FixedPointNumber<8, 8> number("5.0");
 		FixedPointNumber<8, 8> notNumber = ~number;
 		std::cout << "Bitwise NOT operator: ~" << number.toString() << " = " << notNumber.toString() << std::endl;
+		file << "Bitwise NOT operator: ~" << number.toString() << " = " << notNumber.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -291,10 +385,12 @@ void testBitwiseAndOperator()
 		FixedPointNumber<8, 8> number2("3.0");
 		FixedPointNumber<8, 8> andNumber = number1 & number2;
 		std::cout << "Bitwise AND operator: " << number1.toString() << " & " << number2.toString() << " = " << andNumber.toString() << std::endl;
+		file << "Bitwise AND operator: " << number1.toString() << " & " << number2.toString() << " = " << andNumber.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -308,10 +404,12 @@ void testBitwiseOrOperator()
 		FixedPointNumber<8, 8> number2("3.0");
 		FixedPointNumber<8, 8> orNumber = number1 | number2;
 		std::cout << "Bitwise OR operator: " << number1.toString() << " | " << number2.toString() << " = " << orNumber.toString() << std::endl;
+		file << "Bitwise OR operator: " << number1.toString() << " | " << number2.toString() << " = " << orNumber.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -325,10 +423,12 @@ void testBitwiseXorOperator()
 		FixedPointNumber<8, 8> number2("3.0");
 		FixedPointNumber<8, 8> xorNumber = number1 ^ number2;
 		std::cout << "Bitwise XOR operator: " << number1.toString() << " ^ " << number2.toString() << " = " << xorNumber.toString() << std::endl;
+		file << "Bitwise XOR operator: " << number1.toString() << " ^ " << number2.toString() << " = " << xorNumber.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -343,15 +443,18 @@ void testEqualityOperator()
 		if (number1 == number2)
 		{
 			std::cout << "Equality operator: " << number1.toString() << " == " << number2.toString() << " is true." << std::endl;
+			file << "Equality operator: " << number1.toString() << " == " << number2.toString() << " is true." << std::endl;
 		}
 		else
 		{
 			std::cout << "Equality operator: " << number1.toString() << " == " << number2.toString() << " is false." << std::endl;
+			file << "Equality operator: " << number1.toString() << " == " << number2.toString() << " is false." << std::endl;
 		}
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -366,15 +469,18 @@ void testInequalityOperator()
 		if (number1 != number2)
 		{
 			std::cout << "Inequality operator: " << number1.toString() << " != " << number2.toString() << " is true." << std::endl;
+			file << "Inequality operator: " << number1.toString() << " != " << number2.toString() << " is true." << std::endl;
 		}
 		else
 		{
 			std::cout << "Inequality operator: " << number1.toString() << " != " << number2.toString() << " is false." << std::endl;
+			file << "Inequality operator: " << number1.toString() << " != " << number2.toString() << " is false." << std::endl;
 		}
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -389,15 +495,18 @@ void testLessThanOperator()
 		if (number1 < number2)
 		{
 			std::cout << "Less-than operator: " << number1.toString() << " < " << number2.toString() << " is true." << std::endl;
+			file << "Less-than operator: " << number1.toString() << " < " << number2.toString() << " is true." << std::endl;
 		}
 		else
 		{
 			std::cout << "Less-than operator: " << number1.toString() << " < " << number2.toString() << " is false." << std::endl;
+			file << "Less-than operator: " << number1.toString() << " < " << number2.toString() << " is false." << std::endl;
 		}
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -412,15 +521,18 @@ void testLessThanOrEqualToOperator()
 		if (number1 <= number2)
 		{
 			std::cout << "Less-than-or-equal-to operator: " << number1.toString() << " <= " << number2.toString() << " is true." << std::endl;
+			file << "Less-than-or-equal-to operator: " << number1.toString() << " <= " << number2.toString() << " is true." << std::endl;
 		}
 		else
 		{
 			std::cout << "Less-than-or-equal-to operator: " << number1.toString() << " <= " << number2.toString() << " is false." << std::endl;
+			file << "Less-than-or-equal-to operator: " << number1.toString() << " <= " << number2.toString() << " is false." << std::endl;
 		}
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -435,15 +547,18 @@ void testGreaterThanOperator()
 		if (number1 > number2)
 		{
 			std::cout << "Greater-than operator: " << number1.toString() << " > " << number2.toString() << " is true." << std::endl;
+			file << "Greater-than operator: " << number1.toString() << " > " << number2.toString() << " is true." << std::endl;
 		}
 		else
 		{
 			std::cout << "Greater-than operator: " << number1.toString() << " > " << number2.toString() << " is false." << std::endl;
+			file << "Greater-than operator: " << number1.toString() << " > " << number2.toString() << " is false." << std::endl;
 		}
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -458,15 +573,18 @@ void testGreaterThanOrEqualToOperator()
 		if (number1 >= number2)
 		{
 			std::cout << "Greater-than-or-equal-to operator: " << number1.toString() << " >= " << number2.toString() << " is true." << std::endl;
+			file << "Greater-than-or-equal-to operator: " << number1.toString() << " >= " << number2.toString() << " is true." << std::endl;
 		}
 		else
 		{
 			std::cout << "Greater-than-or-equal-to operator: " << number1.toString() << " >= " << number2.toString() << " is false." << std::endl;
+			file << "Greater-than-or-equal-to operator: " << number1.toString() << " >= " << number2.toString() << " is false." << std::endl;
 		}
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -478,13 +596,16 @@ void testPlusEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("5.0");
 		FixedPointNumber<8, 8> number2("3.0");
-		std::cout << "Plus-equals operator: Before number1 += number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "Plus-equals operator: Before number1 += number2, number1 = " << number1.toString();
+		file << "Plus-equals operator: Before number1 += number2, number1 = " << number1.toString();
 		number1 += number2;
-		std::cout << "Plus-equals operator: After number1 += number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "; After number1 += number2, number1 = " << number1.toString() << std::endl;
+		file << "; After number1 += number2, number1 = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -496,13 +617,16 @@ void testMinusEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("5.0");
 		FixedPointNumber<8, 8> number2("3.0");
-		std::cout << "Minus-equals operator: Before number1 -= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "Minus-equals operator: Before number1 -= number2, number1 = " << number1.toString();
+		file << "Minus-equals operator: Before number1 -= number2, number1 = " << number1.toString();
 		number1 -= number2;
-		std::cout << "Minus-equals operator: After number1 -= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "; After number1 -= number2, number1 = " << number1.toString() << std::endl;
+		file << "; After number1 -= number2, number1 = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -514,13 +638,16 @@ void testMultiplicationEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("5.0");
 		FixedPointNumber<8, 8> number2("3.0");
-		std::cout << "Multiplication-equals operator: Before number1 *= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "Multiplication-equals operator: Before number1 *= number2, number1 = " << number1.toString();
+		file << "Multiplication-equals operator: Before number1 *= number2, number1 = " << number1.toString();
 		number1 *= number2;
-		std::cout << "Multiplication-equals operator: After number1 *= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "; After number1 *= number2, number1 = " << number1.toString() << std::endl;
+		file << "; After number1 *= number2, number1 = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -532,13 +659,16 @@ void testDivisionEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("6.0");
 		FixedPointNumber<8, 8> number2("3.0");
-		std::cout << "Division-equals operator: Before number1 /= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "Division-equals operator: Before number1 /= number2, number1 = " << number1.toString();
+		file << "Division-equals operator: Before number1 /= number2, number1 = " << number1.toString();
 		number1 /= number2;
-		std::cout << "Division-equals operator: After number1 /= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "; After number1 /= number2, number1 = " << number1.toString() << std::endl;
+		file << "; After number1 /= number2, number1 = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -550,9 +680,11 @@ void testModuloEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("10.0");
 		FixedPointNumber<8, 8> number2("3.0");
-		std::cout << "Modulo-equals operator: Before number1 %= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "Modulo-equals operator: Before number1 %= number2, number1 = " << number1.toString();
+		file << "Modulo-equals operator: Before number1 %= number2, number1 = " << number1.toString();
 		number1 %= number2;
-		std::cout << "Modulo-equals operator: After number1 %= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "; After number1 %= number2, number1 = " << number1.toString() << std::endl;
+		file << "; After number1 %= number2, number1 = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -567,13 +699,16 @@ void testBitShiftLeftEqualsOperator()
 	try
 	{
 		FixedPointNumber<8, 8> number("3.25");
-		std::cout << "Bitwise left-shift-equals operator: Before number <<= 2, number = " << number.toString() << std::endl;
+		std::cout << "Bitwise left-shift-equals operator: Before number <<= 2, number = " << number.toString();
+		file << "Bitwise left-shift-equals operator: Before number <<= 2, number = " << number.toString();
 		number <<= 2;
-		std::cout << "Bitwise left-shift-equals operator: After number <<= 2, number = " << number.toString() << std::endl;
+		std::cout << "; After number <<= 2, number = " << number.toString() << std::endl;
+		file << "; After number <<= 2, number = " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -584,13 +719,16 @@ void testBitShiftRightEqualsOperator()
 	try
 	{
 		FixedPointNumber<8, 8> number("13.0");
-		std::cout << "Bitwise right-shift-equals operator: Before number >>= 2, number = " << number.toString() << std::endl;
+		std::cout << "Bitwise right-shift-equals operator: Before number >>= 2, number = " << number.toString();
+		file << "Bitwise right-shift-equals operator: Before number >>= 2, number = " << number.toString();
 		number >>= 2;
-		std::cout << "Bitwise right-shift-equals operator: After number >>= 2, number = " << number.toString() << std::endl;
+		std::cout << "; After number >>= 2, number = " << number.toString() << std::endl;
+		file << "; After number >>= 2, number = " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -602,13 +740,16 @@ void testBitwiseAndEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("12.34");
 		FixedPointNumber<8, 8> number2("5.67");
-		std::cout << "Bitwise AND-equals operator: Before number1 &= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "Bitwise AND-equals operator: Before number1 &= number2, number1 = " << number1.toString();
+		file << "Bitwise AND-equals operator: Before number1 &= number2, number1 = " << number1.toString();
 		number1 &= number2;
-		std::cout << "Bitwise AND-equals operator: After number1 &= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "; After number1 &= number2, number1 = " << number1.toString() << std::endl;
+		file << "; After number1 &= number2, number1 = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -620,13 +761,16 @@ void testBitwiseOrEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("12.34");
 		FixedPointNumber<8, 8> number2("5.67");
-		std::cout << "Bitwise OR-equals operator: Before number1 |= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "Bitwise OR-equals operator: Before number1 |= number2, number1 = " << number1.toString();
+		file << "Bitwise OR-equals operator: Before number1 |= number2, number1 = " << number1.toString();
 		number1 |= number2;
-		std::cout << "Bitwise OR-equals operator: After number1 |= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "; After number1 |= number2, number1 = " << number1.toString() << std::endl;
+		file << "; After number1 |= number2, number1 = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -638,13 +782,16 @@ void testBitwiseXorEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("12.34");
 		FixedPointNumber<8, 8> number2("5.67");
-		std::cout << "Bitwise XOR-equals operator: Before number1 ^= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "Bitwise XOR-equals operator: Before number1 ^= number2, number1 = " << number1.toString();
+		file << "Bitwise XOR-equals operator: Before number1 ^= number2, number1 = " << number1.toString();
 		number1 ^= number2;
-		std::cout << "Bitwise XOR-equals operator: After number1 ^= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << "; After number1 ^= number2, number1 = " << number1.toString() << std::endl;
+		file << "; After number1 ^= number2, number1 = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -655,13 +802,16 @@ void testIncrementOperator()
 	try
 	{
 		FixedPointNumber<8, 8> number("5.5");
-		std::cout << "Increment operator: Before ++number, number = " << number.toString() << std::endl;
+		std::cout << "Increment operator: Before ++number, number = " << number.toString();
+		file << "Increment operator: Before ++number, number = " << number.toString();
 		++number;
-		std::cout << "Increment operator: After ++number, number = " << number.toString() << std::endl;
+		std::cout << "; After ++number, number = " << number.toString() << std::endl;
+		file << "; After ++number, number = " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -672,13 +822,16 @@ void testDecrementOperator()
 	try
 	{
 		FixedPointNumber<8, 8> number("5.5");
-		std::cout << "Decrement operator: Before --number, number = " << number.toString() << std::endl;
+		std::cout << "Decrement operator: Before --number, number = " << number.toString();
+		file << "Decrement operator: Before --number, number = " << number.toString();
 		--number;
-		std::cout << "Decrement operator: After --number, number = " << number.toString() << std::endl;
+		std::cout << "; After --number, number = " << number.toString() << std::endl;
+		file << "; After --number, number = " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -692,15 +845,18 @@ void testLogicalNotOperator()
 		if (!number)
 		{
 			std::cout << "Logical NOT operator: !" << number.toString() << " is true." << std::endl;
+			file << "Logical NOT operator: !" << number.toString() << " is true." << std::endl;
 		}
 		else
 		{
 			std::cout << "Logical NOT operator: !" << number.toString() << " is false." << std::endl;
+			file << "Logical NOT operator: !" << number.toString() << " is false." << std::endl;
 		}
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -715,15 +871,18 @@ void testLogicalAndOperator()
 		if (number1 && number2)
 		{
 			std::cout << "Logical AND operator: " << number1.toString() << " && " << number2.toString() << " is true." << std::endl;
+			file << "Logical AND operator: " << number1.toString() << " && " << number2.toString() << " is true." << std::endl;
 		}
 		else
 		{
 			std::cout << "Logical AND operator: " << number1.toString() << " && " << number2.toString() << " is false." << std::endl;
+			file << "Logical AND operator: " << number1.toString() << " && " << number2.toString() << " is false." << std::endl;
 		}
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 } 
 /**
@@ -738,15 +897,18 @@ void testLogicalOrOperator()
 		if (number1 || number2)
 		{
 			std::cout << "Logical OR operator: " << number1.toString() << " || " << number2.toString() << " is true." << std::endl;
+			file << "Logical OR operator: " << number1.toString() << " || " << number2.toString() << " is true." << std::endl;
 		}
 		else
 		{
 			std::cout << "Logical OR operator: " << number1.toString() << " || " << number2.toString() << " is false." << std::endl;
+			file << "Logical OR operator: " << number1.toString() << " || " << number2.toString() << " is false." << std::endl;
 		}
 	}
 	catch(const std::exception& exception)
 	{
 		std::cerr << exception.what() << std::endl;
+		file << exception.what() << std::endl;
 	}
 }
 /**
@@ -758,10 +920,13 @@ int main()
 	testPositiveStringConstructor();
 	testNegativeStringConstructor();
 	testIntegerConstructor();
+	testMaximum();
+	testMinimum();
+	testGetNumberOfDecimalPlaces();
+	testAbsoluteValue();
+	testUnaryNegationAndZero();
 	testAdditionOperator();
 	testSubtractionOperator();
-	testGetNumberOfDecimalPlaces();
-	testUnaryNegationAndZero();
 	testAdditionWithNegative();
 	testFractionalRounding();
 	testMultiplicationOperator();
