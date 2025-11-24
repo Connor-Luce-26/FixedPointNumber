@@ -50,8 +50,8 @@ public:
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator*(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>& other) const;
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator/(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>& other) const;
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator%(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>& other) const;
-	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator<<(int amountToShift) const;
-	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator>>(int amountToShift) const;
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator<<(const int amountToShift) const;
+	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator>>(const int amountToShift) const;
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator~() const;
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator&(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator|(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
@@ -67,8 +67,8 @@ public:
 	void operator*=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
 	void operator/=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
 	void operator%=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
-	void operator<<=(int amountToShift);
-	void operator>>=(int amountToShift);
+	void operator<<=(const int amountToShift);
+	void operator>>=(const int amountToShift);
 	void operator&=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
 	void operator|=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
 	void operator^=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
@@ -597,7 +597,7 @@ FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<n
  * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> The shifted fixed-point number.
  */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
-FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator<<(int amountToShift) const
+FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator<<(const int amountToShift) const
 {
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> shiftedValue = *this;
 	shiftedValue.bits <<= amountToShift;
@@ -611,7 +611,7 @@ FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<n
  * @return FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> The shifted fixed-point number.
  */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
-FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator>>(int amountToShift) const
+FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator>>(const int amountToShift) const
 {
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> shiftedValue = *this;
 	shiftedValue.bits >>= amountToShift;
@@ -814,7 +814,7 @@ void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator%=(c
  * @param amountToShift 
  */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
-void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator<<=(int amountToShift)
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator<<=(const int amountToShift)
 {
 	*this = *this << amountToShift;
 }
@@ -825,7 +825,7 @@ void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator<<=(
  * @param amountToShift 
  */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
-void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator>>=(int amountToShift)
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator>>=(const int amountToShift)
 {
 	*this = *this >> amountToShift;
 }
