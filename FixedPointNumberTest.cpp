@@ -917,6 +917,7 @@ void testLogicalOrOperator()
 }
 /**
  * @brief Main function to run all tests.
+ * @returns int
  */
 int main()
 {
