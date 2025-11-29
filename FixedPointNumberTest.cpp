@@ -328,9 +328,10 @@ void testBitShiftLeftOperator()
 	try
 	{
 		FixedPointNumber<8, 8> number("2.5");
-		FixedPointNumber<8, 8> shifted = number << 2;
-		std::cout << "Bitwise left shift operator: " << number.toString() << " << 2 = " << shifted.toString() << std::endl;
-		file << "Bitwise left shift operator: " << number.toString() << " << 2 = " << shifted.toString() << std::endl;
+		int shiftAmount = 2;
+		FixedPointNumber<8, 8> shifted = number << shiftAmount;
+		std::cout << "Bitwise left shift operator: " << number.bitsToString() << " << " << shiftAmount << " = " << shifted.bitsToString() << std::endl;
+		file << "Bitwise left shift operator: " << number.bitsToString() << " << " << shiftAmount << " = " << shifted.bitsToString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -346,9 +347,10 @@ void testBitShiftRightOperator()
 	try
 	{
 		FixedPointNumber<8, 8> number("10.0");
-		FixedPointNumber<8, 8> shifted = number >> 1;
-		std::cout << "Bitwise right shift operator: " << number.toString() << " >> 1 = " << shifted.toString() << std::endl;
-		file << "Bitwise right shift operator: " << number.toString() << " >> 1 = " << shifted.toString() << std::endl;
+		int shiftAmount = 1;
+		FixedPointNumber<8, 8> shifted = number >> shiftAmount;
+		std::cout << "Bitwise right shift operator: " << number.bitsToString() << " >> " << shiftAmount << " = " << shifted.bitsToString() << std::endl;
+		file << "Bitwise right shift operator: " << number.bitsToString() << " >> " << shiftAmount << " = " << shifted.bitsToString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -365,8 +367,8 @@ void testBitwiseNotOperator()
 	{
 		FixedPointNumber<8, 8> number("5.0");
 		FixedPointNumber<8, 8> notNumber = ~number;
-		std::cout << "Bitwise NOT operator: ~" << number.toString() << " = " << notNumber.toString() << std::endl;
-		file << "Bitwise NOT operator: ~" << number.toString() << " = " << notNumber.toString() << std::endl;
+		std::cout << "Bitwise NOT operator: ~" << number.bitsToString() << " = " << notNumber.bitsToString() << std::endl;
+		file << "Bitwise NOT operator: ~" << number.bitsToString() << " = " << notNumber.bitsToString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -384,8 +386,8 @@ void testBitwiseAndOperator()
 		FixedPointNumber<8, 8> number1("6.0");
 		FixedPointNumber<8, 8> number2("3.0");
 		FixedPointNumber<8, 8> andNumber = number1 & number2;
-		std::cout << "Bitwise AND operator: " << number1.toString() << " & " << number2.toString() << " = " << andNumber.toString() << std::endl;
-		file << "Bitwise AND operator: " << number1.toString() << " & " << number2.toString() << " = " << andNumber.toString() << std::endl;
+		std::cout << "Bitwise AND operator: " << number1.bitsToString() << " & " << number2.bitsToString() << " = " << andNumber.bitsToString() << std::endl;
+		file << "Bitwise AND operator: " << number1.bitsToString() << " & " << number2.bitsToString() << " = " << andNumber.bitsToString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -403,8 +405,8 @@ void testBitwiseOrOperator()
 		FixedPointNumber<8, 8> number1("6.0");
 		FixedPointNumber<8, 8> number2("3.0");
 		FixedPointNumber<8, 8> orNumber = number1 | number2;
-		std::cout << "Bitwise OR operator: " << number1.toString() << " | " << number2.toString() << " = " << orNumber.toString() << std::endl;
-		file << "Bitwise OR operator: " << number1.toString() << " | " << number2.toString() << " = " << orNumber.toString() << std::endl;
+		std::cout << "Bitwise OR operator: " << number1.bitsToString() << " | " << number2.bitsToString() << " = " << orNumber.bitsToString() << std::endl;
+		file << "Bitwise OR operator: " << number1.bitsToString() << " | " << number2.bitsToString() << " = " << orNumber.bitsToString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -422,8 +424,8 @@ void testBitwiseXorOperator()
 		FixedPointNumber<8, 8> number1("6.0");
 		FixedPointNumber<8, 8> number2("3.0");
 		FixedPointNumber<8, 8> xorNumber = number1 ^ number2;
-		std::cout << "Bitwise XOR operator: " << number1.toString() << " ^ " << number2.toString() << " = " << xorNumber.toString() << std::endl;
-		file << "Bitwise XOR operator: " << number1.toString() << " ^ " << number2.toString() << " = " << xorNumber.toString() << std::endl;
+		std::cout << "Bitwise XOR operator: " << number1.bitsToString() << " ^ " << number2.bitsToString() << " = " << xorNumber.bitsToString() << std::endl;
+		file << "Bitwise XOR operator: " << number1.bitsToString() << " ^ " << number2.bitsToString() << " = " << xorNumber.bitsToString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -596,11 +598,11 @@ void testPlusEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("5.0");
 		FixedPointNumber<8, 8> number2("3.0");
-		std::cout << "Plus-equals operator: Before number1 += number2, number1 = " << number1.toString();
-		file << "Plus-equals operator: Before number1 += number2, number1 = " << number1.toString();
+		std::cout << "Plus-equals operator: " << number1.toString() << " += " << number2.toString();
+		file << "Plus-equals operator: " << number1.toString() << " += " << number2.toString();
 		number1 += number2;
-		std::cout << "; After number1 += number2, number1 = " << number1.toString() << std::endl;
-		file << "; After number1 += number2, number1 = " << number1.toString() << std::endl;
+		std::cout << " = " << number1.toString() << std::endl;
+		file << " = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -617,11 +619,11 @@ void testMinusEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("5.0");
 		FixedPointNumber<8, 8> number2("3.0");
-		std::cout << "Minus-equals operator: Before number1 -= number2, number1 = " << number1.toString();
-		file << "Minus-equals operator: Before number1 -= number2, number1 = " << number1.toString();
+		std::cout << "Minus-equals operator: " << number1.toString() << " -= " << number2.toString();
+		file << "Minus-equals operator: " << number1.toString() << " -= " << number2.toString();
 		number1 -= number2;
-		std::cout << "; After number1 -= number2, number1 = " << number1.toString() << std::endl;
-		file << "; After number1 -= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << " = " << number1.toString() << std::endl;
+		file << " = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -638,11 +640,11 @@ void testMultiplicationEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("5.0");
 		FixedPointNumber<8, 8> number2("3.0");
-		std::cout << "Multiplication-equals operator: Before number1 *= number2, number1 = " << number1.toString();
-		file << "Multiplication-equals operator: Before number1 *= number2, number1 = " << number1.toString();
+		std::cout << "Multiplication-equals operator: " << number1.toString() << " *= " << number2.toString();
+		file << "Multiplication-equals operator: " << number1.toString() << " *= " << number2.toString();
 		number1 *= number2;
-		std::cout << "; After number1 *= number2, number1 = " << number1.toString() << std::endl;
-		file << "; After number1 *= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << " = " << number1.toString() << std::endl;
+		file << " = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -659,11 +661,11 @@ void testDivisionEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("6.0");
 		FixedPointNumber<8, 8> number2("3.0");
-		std::cout << "Division-equals operator: Before number1 /= number2, number1 = " << number1.toString();
-		file << "Division-equals operator: Before number1 /= number2, number1 = " << number1.toString();
+		std::cout << "Division-equals operator: " << number1.toString() << " /= " << number2.toString();
+		file << "Division-equals operator: " << number1.toString() << " /= " << number2.toString();
 		number1 /= number2;
-		std::cout << "; After number1 /= number2, number1 = " << number1.toString() << std::endl;
-		file << "; After number1 /= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << " = " << number1.toString() << std::endl;
+		file << " = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -680,11 +682,11 @@ void testModuloEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("10.0");
 		FixedPointNumber<8, 8> number2("3.0");
-		std::cout << "Modulo-equals operator: Before number1 %= number2, number1 = " << number1.toString();
-		file << "Modulo-equals operator: Before number1 %= number2, number1 = " << number1.toString();
+		std::cout << "Modulo-equals operator: " << number1.toString() << " %= " << number2.toString();
+		file << "Modulo-equals operator: " << number1.toString() << " %= " << number2.toString();
 		number1 %= number2;
-		std::cout << "; After number1 %= number2, number1 = " << number1.toString() << std::endl;
-		file << "; After number1 %= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << " = " << number1.toString() << std::endl;
+		file << " = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -699,11 +701,12 @@ void testBitShiftLeftEqualsOperator()
 	try
 	{
 		FixedPointNumber<8, 8> number("3.25");
-		std::cout << "Bitwise left-shift-equals operator: Before number <<= 2, number = " << number.toString();
-		file << "Bitwise left-shift-equals operator: Before number <<= 2, number = " << number.toString();
-		number <<= 2;
-		std::cout << "; After number <<= 2, number = " << number.toString() << std::endl;
-		file << "; After number <<= 2, number = " << number.toString() << std::endl;
+		int shiftAmount = 2;
+		std::cout << "Bitwise left-shift-equals operator: " << number.toString() << " <<= " << shiftAmount;
+		file << "Bitwise left-shift-equals operator: " << number.toString() << " <<= " << shiftAmount;
+		number <<= shiftAmount;
+		std::cout << " = " << number.toString() << std::endl;
+		file << " = " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -719,11 +722,12 @@ void testBitShiftRightEqualsOperator()
 	try
 	{
 		FixedPointNumber<8, 8> number("13.0");
-		std::cout << "Bitwise right-shift-equals operator: Before number >>= 2, number = " << number.toString();
-		file << "Bitwise right-shift-equals operator: Before number >>= 2, number = " << number.toString();
-		number >>= 2;
-		std::cout << "; After number >>= 2, number = " << number.toString() << std::endl;
-		file << "; After number >>= 2, number = " << number.toString() << std::endl;
+		int shiftAmount = 2;
+		std::cout << "Bitwise right-shift-equals operator: " << number.toString() << " >>= " << shiftAmount;
+		file << "Bitwise right-shift-equals operator: " << number.toString() << " >>= " << shiftAmount;
+		number >>= shiftAmount;
+		std::cout << " = " << number.toString() << std::endl;
+		file << " = " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -740,11 +744,11 @@ void testBitwiseAndEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("12.34");
 		FixedPointNumber<8, 8> number2("5.67");
-		std::cout << "Bitwise AND-equals operator: Before number1 &= number2, number1 = " << number1.toString();
-		file << "Bitwise AND-equals operator: Before number1 &= number2, number1 = " << number1.toString();
+		std::cout << "Bitwise AND-equals operator: " << number1.toString() << " &= " << number2.toString();
+		file << "Bitwise AND-equals operator: " << number1.toString() << " &= " << number2.toString();
 		number1 &= number2;
-		std::cout << "; After number1 &= number2, number1 = " << number1.toString() << std::endl;
-		file << "; After number1 &= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << " = " << number1.toString() << std::endl;
+		file << " = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -761,11 +765,11 @@ void testBitwiseOrEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("12.34");
 		FixedPointNumber<8, 8> number2("5.67");
-		std::cout << "Bitwise OR-equals operator: Before number1 |= number2, number1 = " << number1.toString();
-		file << "Bitwise OR-equals operator: Before number1 |= number2, number1 = " << number1.toString();
+		std::cout << "Bitwise OR-equals operator: " << number1.toString() << " |= " << number2.toString();
+		file << "Bitwise OR-equals operator: " << number1.toString() << " |= " << number2.toString();
 		number1 |= number2;
-		std::cout << "; After number1 |= number2, number1 = " << number1.toString() << std::endl;
-		file << "; After number1 |= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << " = " << number1.toString() << std::endl;
+		file << " = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -782,11 +786,11 @@ void testBitwiseXorEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number1("12.34");
 		FixedPointNumber<8, 8> number2("5.67");
-		std::cout << "Bitwise XOR-equals operator: Before number1 ^= number2, number1 = " << number1.toString();
-		file << "Bitwise XOR-equals operator: Before number1 ^= number2, number1 = " << number1.toString();
+		std::cout << "Bitwise XOR-equals operator: " << number1.toString() << " ^= " << number2.toString();
+		file << "Bitwise XOR-equals operator: " << number1.toString() << " ^= " << number2.toString();
 		number1 ^= number2;
-		std::cout << "; After number1 ^= number2, number1 = " << number1.toString() << std::endl;
-		file << "; After number1 ^= number2, number1 = " << number1.toString() << std::endl;
+		std::cout << " = " << number1.toString() << std::endl;
+		file << " = " << number1.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -802,11 +806,11 @@ void testIncrementOperator()
 	try
 	{
 		FixedPointNumber<8, 8> number("5.5");
-		std::cout << "Increment operator: Before ++number, number = " << number.toString();
-		file << "Increment operator: Before ++number, number = " << number.toString();
+		std::cout << "Increment operator: " << number.toString() << "++";
+		file << "Increment operator: " << number.toString() << "++";
 		++number;
-		std::cout << "; After ++number, number = " << number.toString() << std::endl;
-		file << "; After ++number, number = " << number.toString() << std::endl;
+		std::cout << " = " << number.toString() << std::endl;
+		file << " = " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -822,11 +826,11 @@ void testDecrementOperator()
 	try
 	{
 		FixedPointNumber<8, 8> number("5.5");
-		std::cout << "Decrement operator: Before --number, number = " << number.toString();
-		file << "Decrement operator: Before --number, number = " << number.toString();
+		std::cout << "Decrement operator: " << number.toString() << "--";
+		file << "Decrement operator: " << number.toString() << "--";
 		--number;
-		std::cout << "; After --number, number = " << number.toString() << std::endl;
-		file << "; After --number, number = " << number.toString() << std::endl;
+		std::cout << " = " << number.toString() << std::endl;
+		file << " = " << number.toString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{

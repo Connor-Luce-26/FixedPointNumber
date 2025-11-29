@@ -21,23 +21,23 @@ Less-than operator: 5.0 < 6.0 is true.
 Less-than-or-equal-to operator: 5.0 <= 5.0 is true.
 Greater-than operator: 7.0 > 6.0 is true.
 Greater-than-or-equal-to operator: 7.0 >= 7.0 is true.
-Plus-equals operator: Before number1 += number2, number1 = 5.0; After number1 += number2, number1 = 8.0
-Minus-equals operator: Before number1 -= number2, number1 = 5.0; After number1 -= number2, number1 = 2.0
-Multiplication-equals operator: Before number1 *= number2, number1 = 5.0; After number1 *= number2, number1 = 15.0
-Division-equals operator: Before number1 /= number2, number1 = 6.0; After number1 /= number2, number1 = 2.0
-Modulo-equals operator: Before number1 %= number2, number1 = 10.0; After number1 %= number2, number1 = 1.0
-Bitwise left shift operator: 2.5 << 2 = 10.0
-Bitwise left-shift-equals operator: Before number <<= 2, number = 3.25; After number <<= 2, number = 13.00
-Bitwise right shift operator: 10.0 >> 1 = 5.0
-Bitwise right-shift-equals operator: Before number >>= 2, number = 13.0; After number >>= 2, number = 3.3
-Bitwise NOT operator: ~5.0 = -5.0
-Bitwise AND operator: 6.0 & 3.0 = 2.0
-Bitwise OR operator: 6.0 | 3.0 = 7.0
-Bitwise OR-equals operator: Before number1 |= number2, number1 = 12.34; After number1 |= number2, number1 = 13.99
-Bitwise XOR operator: 6.0 ^ 3.0 = 5.0
-Bitwise XOR-equals operator: Before number1 ^= number2, number1 = 12.34; After number1 ^= number2, number1 = 9.98
-Increment operator: Before ++number, number = 5.5; After ++number, number = 6.5
-Decrement operator: Before --number, number = 5.5; After --number, number = 4.5
+Plus-equals operator: 5.0 += 3.0 = 8.0
+Minus-equals operator: 5.0 -= 3.0 = 2.0
+Multiplication-equals operator: 5.0 *= 3.0 = 15.0
+Division-equals operator: 6.0 /= 3.0 = 2.0
+Modulo-equals operator: 10.0 %= 3.0 = 1.0
+Bitwise left shift operator: 0000001010000000 << 2 = 0000101000000000
+Bitwise left-shift-equals operator: 3.25 <<= 2 = 13.00
+Bitwise right shift operator: 0000101000000000 >> 1 = 0000010100000000
+Bitwise right-shift-equals operator: 13.0 >>= 2 = 3.3
+Bitwise NOT operator: ~0000010100000000 = 1111101011111111
+Bitwise AND operator: 0000011000000000 & 0000001100000000 = 0000001000000000
+Bitwise OR operator: 0000011000000000 | 0000001100000000 = 0000011100000000
+Bitwise OR-equals operator: 12.34 |= 5.66 = 13.99
+Bitwise XOR operator: 0000011000000000 ^ 0000001100000000 = 0000010100000000
+Bitwise XOR-equals operator: 12.34 ^= 5.66 = 9.98
+Increment operator: 5.5++ = 6.5
+Decrement operator: 5.5-- = 4.5
 Logical NOT operator: !0.0 is true.
 Logical AND operator: 5.0 && 3.0 is true.
 Logical OR operator: 0.0 || 3.0 is true.

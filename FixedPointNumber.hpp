@@ -40,8 +40,11 @@ public:
 	static FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> maximum(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> fixedPointNumbers[], int fixedPointNumbersSize);
 	static FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> minimum(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> fixedPointNumbers[], int fixedPointNumbersSize);
 	std::string toString() const;
+	std::string bitsToString() const;
 	void print() const;
 	void printLine() const;
+	void printBits() const;
+	void printBitsLine() const;
 	int getNumberOfDecimalPlaces() const;
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> absoluteValue() const;
 	FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> operator+(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>& other) const;
@@ -401,9 +404,20 @@ std::string FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::toStr
 	return outputStringStream.str();
 }
 /**
+ * @brief Convert the fixed-point number's bits to a string representation.
+ * @tparam numberOfIntegerBits
+ * @tparam numberOfFractionalBits
+ * @return std::string
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+inline std::string FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::bitsToString() const
+{
+	return this->bits.to_string();
+}
+/**
  * @brief Print the fixed-point number to standard output.
- * @tparam numberOfIntegerBits 
- * @tparam numberOfFractionalBits 
+ * @tparam numberOfIntegerBits
+ * @tparam numberOfFractionalBits
  */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::print() const
@@ -422,10 +436,30 @@ void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::printLine() 
 	std::cout << std::endl;
 }
 /**
+ * @brief Print the bits of the fixed-point number to standard output.
+ * @tparam numberOfIntegerBits
+ * @tparam numberOfFractionalBits
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+inline void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::printBits() const
+{
+	std::cout << this->bitsToString();
+}
+/**
+ * @brief Print the bits of the fixed-point number followed by a newline to standard output.
+ * @tparam numberOfIntegerBits
+ * @tparam numberOfFractionalBits
+ */
+template <int numberOfIntegerBits, int numberOfFractionalBits>
+inline void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::printBitsLine() const
+{
+	std::cout << this->bitsToString() << std::endl;
+}
+/**
  * @brief Get the number of decimal places for the fixed-point number.
- * @tparam numberOfIntegerBits 
- * @tparam numberOfFractionalBits 
- * @return int 
+ * @tparam numberOfIntegerBits
+ * @tparam numberOfFractionalBits
+ * @return int
  */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
 int FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::getNumberOfDecimalPlaces() const
