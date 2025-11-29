@@ -330,8 +330,8 @@ void testBitShiftLeftOperator()
 		FixedPointNumber<8, 8> number("2.5");
 		int shiftAmount = 2;
 		FixedPointNumber<8, 8> shifted = number << shiftAmount;
-		std::cout << "Bitwise left shift operator: " << number.bitsToString() << " << " << shiftAmount << " = " << shifted.bitsToString() << std::endl;
-		file << "Bitwise left shift operator: " << number.bitsToString() << " << " << shiftAmount << " = " << shifted.bitsToString() << std::endl;
+		std::cout << "Left shift operator: " << number.bitsToString() << " << " << shiftAmount << " = " << shifted.bitsToString() << std::endl;
+		file << "Left shift operator: " << number.bitsToString() << " << " << shiftAmount << " = " << shifted.bitsToString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -349,8 +349,8 @@ void testBitShiftRightOperator()
 		FixedPointNumber<8, 8> number("10.0");
 		int shiftAmount = 1;
 		FixedPointNumber<8, 8> shifted = number >> shiftAmount;
-		std::cout << "Bitwise right shift operator: " << number.bitsToString() << " >> " << shiftAmount << " = " << shifted.bitsToString() << std::endl;
-		file << "Bitwise right shift operator: " << number.bitsToString() << " >> " << shiftAmount << " = " << shifted.bitsToString() << std::endl;
+		std::cout << "Right shift operator: " << number.bitsToString() << " >> " << shiftAmount << " = " << shifted.bitsToString() << std::endl;
+		file << "Right shift operator: " << number.bitsToString() << " >> " << shiftAmount << " = " << shifted.bitsToString() << std::endl;
 	}
 	catch(const std::exception& exception)
 	{
@@ -702,8 +702,8 @@ void testBitShiftLeftEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number("3.25");
 		int shiftAmount = 2;
-		std::cout << "Bitwise left-shift-equals operator: " << number.toString() << " <<= " << shiftAmount;
-		file << "Bitwise left-shift-equals operator: " << number.toString() << " <<= " << shiftAmount;
+		std::cout << "Left-shift-equals operator: " << number.toString() << " <<= " << shiftAmount;
+		file << "Left-shift-equals operator: " << number.toString() << " <<= " << shiftAmount;
 		number <<= shiftAmount;
 		std::cout << " = " << number.toString() << std::endl;
 		file << " = " << number.toString() << std::endl;
@@ -723,8 +723,8 @@ void testBitShiftRightEqualsOperator()
 	{
 		FixedPointNumber<8, 8> number("13.0");
 		int shiftAmount = 2;
-		std::cout << "Bitwise right-shift-equals operator: " << number.toString() << " >>= " << shiftAmount;
-		file << "Bitwise right-shift-equals operator: " << number.toString() << " >>= " << shiftAmount;
+		std::cout << "Right-shift-equals operator: " << number.toString() << " >>= " << shiftAmount;
+		file << "Right-shift-equals operator: " << number.toString() << " >>= " << shiftAmount;
 		number >>= shiftAmount;
 		std::cout << " = " << number.toString() << std::endl;
 		file << " = " << number.toString() << std::endl;
