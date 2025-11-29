@@ -75,8 +75,8 @@ public:
 	void operator&=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
 	void operator|=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
 	void operator^=(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other);
-	void operator++();
-	void operator--();
+	void operator++(int);
+	void operator--(int);
 	bool operator!() const;
 	bool operator&&(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
 	bool operator||(const FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits> &other) const;
@@ -902,7 +902,7 @@ void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator^=(c
  * @tparam numberOfFractionalBits
  */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
-void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator++()
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator++(int)
 {
 	*this += FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>(1);
 }
@@ -912,7 +912,7 @@ void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator++()
  * @tparam numberOfFractionalBits 
  */
 template <int numberOfIntegerBits, int numberOfFractionalBits>
-void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator--()
+void FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>::operator--(int)
 {
 	*this -= FixedPointNumber<numberOfIntegerBits, numberOfFractionalBits>(1);
 }

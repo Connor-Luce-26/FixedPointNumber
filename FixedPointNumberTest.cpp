@@ -808,7 +808,7 @@ void testIncrementOperator()
 		FixedPointNumber<8, 8> number("5.5");
 		std::cout << "Increment operator: " << number.toString() << "++";
 		file << "Increment operator: " << number.toString() << "++";
-		++number;
+		number++;
 		std::cout << " = " << number.toString() << std::endl;
 		file << " = " << number.toString() << std::endl;
 	}
@@ -828,7 +828,7 @@ void testDecrementOperator()
 		FixedPointNumber<8, 8> number("5.5");
 		std::cout << "Decrement operator: " << number.toString() << "--";
 		file << "Decrement operator: " << number.toString() << "--";
-		--number;
+		number--;
 		std::cout << " = " << number.toString() << std::endl;
 		file << " = " << number.toString() << std::endl;
 	}

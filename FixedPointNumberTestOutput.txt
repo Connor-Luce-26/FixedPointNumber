@@ -26,10 +26,10 @@ Minus-equals operator: 5.0 -= 3.0 = 2.0
 Multiplication-equals operator: 5.0 *= 3.0 = 15.0
 Division-equals operator: 6.0 /= 3.0 = 2.0
 Modulo-equals operator: 10.0 %= 3.0 = 1.0
-Bitwise left shift operator: 0000001010000000 << 2 = 0000101000000000
-Bitwise left-shift-equals operator: 3.25 <<= 2 = 13.00
-Bitwise right shift operator: 0000101000000000 >> 1 = 0000010100000000
-Bitwise right-shift-equals operator: 13.0 >>= 2 = 3.3
+Left shift operator: 0000001010000000 << 2 = 0000101000000000
+Left-shift-equals operator: 3.25 <<= 2 = 13.00
+Right shift operator: 0000101000000000 >> 1 = 0000010100000000
+Right-shift-equals operator: 13.0 >>= 2 = 3.3
 Bitwise NOT operator: ~0000010100000000 = 1111101011111111
 Bitwise AND operator: 0000011000000000 & 0000001100000000 = 0000001000000000
 Bitwise OR operator: 0000011000000000 | 0000001100000000 = 0000011100000000
